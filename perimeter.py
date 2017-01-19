@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 
 """
 read a list of points from a CSV file and print out the length of the perimiter of the shape that is formed by joining the points in their listed order
@@ -35,8 +35,8 @@ def get_distances(points):
 
 def get_distance(point1, point2):
     """ use pythagorean theorem to find distance between 2 points """
-    a = abs(point1[0] - point2[0]) ** 2
-    b = abs(point1[1] - point2[1]) ** 2
+    a = (point1[0] - point2[0]) ** 2
+    b = (point1[1] - point2[1]) ** 2
     return (a + b) ** (1.0 / 2)
 
 
