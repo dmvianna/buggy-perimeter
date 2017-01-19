@@ -17,7 +17,9 @@ def get_distances(points):
     """ convert a list of points into a list of distances """
     if len(points) < 3:
         raise ValueError("Not a polygon: less than 3 vertices.")
-    
+
+    # I could have used a generator here, but I'm going for
+    # readability rather than speed.
     def go(points_, acc=[]):
         if len(points_) == 1:
             acc.append(get_distance(points[0], points_[0]))
