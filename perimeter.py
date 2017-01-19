@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 
 """
 read a list of points from a CSV file and print out the length of the perimiter of the shape that is formed by joining the points in their listed order
