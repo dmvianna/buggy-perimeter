@@ -1,64 +1,63 @@
-#!/usr/bin/env pytthon
+#!/usr/bin/env python
 
 """
 read a list of points from a CSV file and print out the length of the perimiter of the shape that is formed by joining the points in their listed order
 """
 
 import csv
-
-def main(file_name):
-
-    fp = open(file_name)
-    reader = csv.reader(fp)
-
-    points = []
-    for row in reader:
-        x = row[0]
-        y = row[1]
-        points.append((x,y))
-
-    length = perimiter(points)
-
-    print length
+import sys
 
 
-if __name__ == "__main__":
-
-    file_name = sys.argv[0]
-    main(file_name)
-
-
-def perimiter(points):
+def perimeter(points):
     """ returns the length of the perimiter of some shape defined by a list of points """
-    distances = get_distances(points)
-
-    length = 0
-    for distance in distances:
-        length = length + distance
-
-    return length
+    return sum(get_distances(points))
 
 
 def get_distances(points):
     """ convert a list of points into a list of distances """
-    i = 0
-    distances = []
-    for i in range(len(points)):
-        point = points[i]
-        next_point = points[i+1]
-        x0 = point[0]
-        y0 = point[1]
-        x1 = next_point[1]
-        y1 = next_point[1]
+    if len(points) < 3:
+        raise ValueError("Not a polygon: less than 3 vertices.")
+    
+    def go(points_, acc=[]):
+        if len(points_) == 1:
+            return acc
+        else:
+            point = points_[0]
+            next_point = points_[1]
+            acc.append(get_distance(point, next_point))
+            return go(points_[1:], acc)
+        
+    return go(points)
 
-        point_distance = get_distance(x0, y0, x1, y1)
-        distances.append(point_distance)
 
-
-def get_distance(x0, y1, x1, y1):
-    """ use pythagorean theorm to find distance between 2 points """
-    a = x1 - x2
-    b = y1 - y2
+def get_distance(point1, point2):
+    """ use pythagorean theorem to find distance between 2 points """
+    a = point2[0] - point1[0]
+    b = point2[1] - point1[1]
     c_2 = a*a + b*b
 
     return c_2 ** (1/2)
+
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+
+    with open(sys.argv[1], "rb") as fp:
+        reader = csv.reader(fp)
+        next(reader, None)
+        points = []
+        for row in reader:
+            try:
+                x = float(row[0])
+                y = float(row[1])
+            except:
+                raise ValueError('CSV has non-numeric data: ' + ', '.join(row))
+
+            points.append((x,y))
+
+        print perimeter(points)
+
+
+if __name__ == "__main__":
+    main()

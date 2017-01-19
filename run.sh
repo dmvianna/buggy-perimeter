@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Make sure that python file is execuatble
+# Make sure that python file is executable
 chmod +x ./perimeter.py
 
 # run perimeter script for each of the sample data csv files
