@@ -20,6 +20,7 @@ def get_distances(points):
     
     def go(points_, acc=[]):
         if len(points_) == 1:
+            acc.append(get_distance(points[0], points_[0]))
             return acc
         else:
             point = points_[0]
