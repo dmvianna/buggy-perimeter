@@ -35,11 +35,9 @@ def get_distances(points):
 
 def get_distance(point1, point2):
     """ use pythagorean theorem to find distance between 2 points """
-    a = point2[0] - point1[0]
-    b = point2[1] - point1[1]
-    c_2 = a*a + b*b
-
-    return c_2 ** (1/2)
+    a = abs(point1[0] - point2[0]) ** 2
+    b = abs(point1[1] - point2[1]) ** 2
+    return (a + b) ** (1.0 / 2)
 
 
 def main(argv=None):
