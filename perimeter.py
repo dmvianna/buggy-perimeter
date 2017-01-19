@@ -35,8 +35,8 @@ def get_distances(points):
 
 def get_distance(point1, point2):
     """ use pythagorean theorem to find distance between 2 points """
-    a = (point1[0] - point2[0]) ** 2
-    b = (point1[1] - point2[1]) ** 2
+    a = (point1['x'] - point2['x']) ** 2
+    b = (point1['y'] - point2['y']) ** 2
     return (a + b) ** (1.0 / 2)
 
 
@@ -44,18 +44,15 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
 
-    with open(sys.argv[1], "rb") as fp:
+    with open(sys.argv[1]) as fp:
         reader = csv.reader(fp)
-        next(reader, None)
+        header = next(reader)
         points = []
-        for row in reader:
-            try:
-                x = float(row[0])
-                y = float(row[1])
-            except:
-                raise ValueError('CSV has non-numeric data: ' + ', '.join(row))
-
-            points.append((x,y))
+        for row in [r for r in reader]:
+            point = {}
+            for i in range(len(header)):
+                point[header[i]] = float(row[i])
+            points.append(point)
 
         print perimeter(points)
 
